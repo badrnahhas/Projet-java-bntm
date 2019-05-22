@@ -1,3 +1,4 @@
+package userModel;
 
 public class Admin extends User {
 

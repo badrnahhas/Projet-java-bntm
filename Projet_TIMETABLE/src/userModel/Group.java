@@ -1,3 +1,4 @@
+package userModel;
 import java.util.ArrayList;
 
 public class Group {
@@ -58,7 +59,7 @@ public class Group {
 	public void removeaStudent(int aId_student) {
 		int i = getStudentPosition(aId_student);
 		if (i != -1) {
-			Students.get(i).setId_group(0);
+			Students.get(i).setId_group(-1);
 			Students.remove(i);
 			setNumber_of_students();
 		}

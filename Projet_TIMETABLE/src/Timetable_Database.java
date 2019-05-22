@@ -1,3 +1,5 @@
+import timeTableModel.Classroom;
+import timeTableModel.Timetable;
 
 public class Timetable_Database {
 	public Timetable _unnamed_Timetable_;

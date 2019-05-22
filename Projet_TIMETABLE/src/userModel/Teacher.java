@@ -1,4 +1,4 @@
-
+package userModel;
 public class Teacher extends User {
 	
 	private int id_teacher;
