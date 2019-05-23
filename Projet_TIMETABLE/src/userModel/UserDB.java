@@ -1,12 +1,17 @@
 package userModel;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
+import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 /**
  * 
@@ -49,6 +54,117 @@ public class UserDB {
 		super();
 		this.setFile(file);
 		load_users_groups();
+	}
+	
+	public void save_users_groups() {
+		Element rootElt = new Element("UsersDB");
+		org.jdom2.Document document = new Document(rootElt);
+		save_groups(rootElt);
+		save_students(rootElt);
+		save_teachers(rootElt);
+		save_admins(rootElt);
+		try{ 
+			XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
+			sortie.output(document, new FileOutputStream("test_UserDB.xml"));
+		}
+		catch (java.io.IOException e){}
+	}
+	
+	private void save_groups (Element root) {
+		Element groupsElt = new Element("Groups");
+		for(Entry<Integer,Group> entry: Groups.entrySet()) {
+			Element agroupElt = new Element("Group");
+			Element aIdgroupElt = new Element("groupId");
+			Group Value = entry.getValue();
+			aIdgroupElt.setText(Integer.toString(Value.getId_group()));
+			agroupElt.addContent(aIdgroupElt);
+			groupsElt.addContent(agroupElt);
+		}
+		root.addContent(groupsElt);
+	}
+	
+	private void save_students (Element root) {
+		Element studentsElt = new Element("Students");
+		for(Entry<Integer,User> entry: Users.entrySet()) {
+			User Value = entry.getValue();
+			if (Value instanceof Student){
+				Element astudentElt = new Element("Student");
+				Element aloginElt = new Element("login");
+				Element afirst_nameElt = new Element("firstname");
+				Element alast_nameElt = new Element("surname");
+				Element apasswordElt = new Element("pwd");
+				Element astudentIdElt = new Element("studentId");
+				Element aIdgroupElt = new Element("groupId");
+				aloginElt.setText(Value.getLogin());
+				afirst_nameElt.setText(Value.getFirst_name());
+				alast_nameElt.setText(Value.getLast_name());
+				apasswordElt.setText(Value.getPassword());
+				astudentIdElt.setText(Integer.toString(((Student) Value).getId_student()));
+				aIdgroupElt.setText(Integer.toString(((Student)Value).getId_group()));
+				astudentElt.addContent(aloginElt);
+				astudentElt.addContent(afirst_nameElt);
+				astudentElt.addContent(alast_nameElt);
+				astudentElt.addContent(apasswordElt);
+				astudentElt.addContent(astudentIdElt);
+				astudentElt.addContent(aIdgroupElt);
+				studentsElt.addContent(astudentElt);
+			}
+		}
+		root.addContent(studentsElt);
+	}
+	
+	private void save_teachers (Element root) {
+		Element teachersElt = new Element("Teachers");
+		for(Entry<Integer,User> entry: Users.entrySet()) {
+			User Value = entry.getValue();
+			if (Value instanceof Teacher){
+				Element ateacherElt = new Element("Teacher");
+				Element aloginElt = new Element("login");
+				Element afirst_nameElt = new Element("firstname");
+				Element alast_nameElt = new Element("surname");
+				Element apasswordElt = new Element("pwd");
+				Element ateacherIdElt = new Element("teacherId");
+				aloginElt.setText(Value.getLogin());
+				afirst_nameElt.setText(Value.getFirst_name());
+				alast_nameElt.setText(Value.getLast_name());
+				apasswordElt.setText(Value.getPassword());
+				ateacherIdElt.setText(Integer.toString(((Teacher) Value).getId_teacher()));
+				ateacherElt.addContent(aloginElt);
+				ateacherElt.addContent(afirst_nameElt);
+				ateacherElt.addContent(alast_nameElt);
+				ateacherElt.addContent(apasswordElt);
+				ateacherElt.addContent(ateacherIdElt);
+				teachersElt.addContent(ateacherElt);
+			}
+		}
+		root.addContent(teachersElt);
+	}
+	
+	private void save_admins (Element root) {
+		Element adminsElt = new Element("Administrators");
+		for(Entry<Integer,User> entry: Users.entrySet()) {
+			User Value = entry.getValue();
+			if (Value instanceof Admin){
+				Element aadminElt = new Element("Administrator");
+				Element aloginElt = new Element("login");
+				Element afirst_nameElt = new Element("firstname");
+				Element alast_nameElt = new Element("surname");
+				Element apasswordElt = new Element("pwd");
+				Element aadminIdElt = new Element("adminId");
+				aloginElt.setText(Value.getLogin());
+				afirst_nameElt.setText(Value.getFirst_name());
+				alast_nameElt.setText(Value.getLast_name());
+				apasswordElt.setText(Value.getPassword());
+				aadminIdElt.setText(Integer.toString(((Admin) Value).getId_admin()));
+				aadminElt.addContent(aloginElt);
+				aadminElt.addContent(afirst_nameElt);
+				aadminElt.addContent(alast_nameElt);
+				aadminElt.addContent(apasswordElt);
+				aadminElt.addContent(aadminIdElt);
+				adminsElt.addContent(aadminElt);
+			}
+		}
+		root.addContent(adminsElt);
 	}
 	
 	public void load_users_groups() {
