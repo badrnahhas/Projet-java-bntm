@@ -30,9 +30,15 @@ public class UserDB {
 	 * Le fichier contenant la base de données.
 	 */
 	private String file;
+
+	/**
+	 * Hashtable contenant un ensemble d'id avec pour clé leur login
+	 * pour éviter d'avoir deux même ID et/ou deux même login
+	 */
+	private Hashtable<String, Integer> IDs = new Hashtable<String, Integer>();
 	
 	/**
-	 * Hashtable contenant un ensemble d'utilisateurs
+	 * Hashtable contenant un ensemble d'utilisateurs avec pour clé leur id
 	 */
 	private Hashtable<Integer, User> Users = new Hashtable<Integer, User>();
 	
@@ -48,7 +54,7 @@ public class UserDB {
 	 * !!!!!!!!!!!! PENSEZ Ã€ AJOUTER UN ADMINISTRATEUR (su par exemple) QUI VOUS PERMETTRA DE CHARGER LA BASE DE DONNÃ‰ES AU DEMARRAGE DE L'APPLICATION !!!!!!
 	 * 
 	 * @param file
-	 * 		Le nom du fichier qui contient la base de donnÃ©es.
+	 * 		Le nom du fichier qui contient la base de données.
 	 */
 	public UserDB(String file){
 		super();
@@ -177,49 +183,71 @@ public class UserDB {
 		catch(Exception e){}
 		if(document!=null){
 			rootElt = document.getRootElement();
-			List<Element> groupElts = rootElt.getChild("Groups").getChildren("Group");
-			Iterator<Element> itgroup = groupElts.iterator();
-			while(itgroup.hasNext()){
-				Element agroupElt = (Element)itgroup.next();
-				int aIdgroup = Integer.parseInt(agroupElt.getChild("groupId").getText());
-				Group aGroup = new Group(aIdgroup);
-				setGroups(aGroup);
-			}
-			List<Element> studentElts = rootElt.getChild("Students").getChildren("Student");
-			Iterator<Element> itstudent = studentElts.iterator();
-			while(itstudent.hasNext()){
-				Element astudentElt = (Element)itstudent.next();
-				String aLogin = astudentElt.getChild("login").getText();
-				String aFirst_name = astudentElt.getChild("firstname").getText();
-				String aLast_name = astudentElt.getChild("surname").getText();
-				String aPassword = astudentElt.getChild("pwd").getText();				
-				int aId_student = Integer.parseInt(astudentElt.getChild("studentId").getText());
-				int aId_group = Integer.parseInt(astudentElt.getChild("groupId").getText());
-				Student aStudent = new Student(aLogin, aPassword, aFirst_name, aLast_name, aId_student, aId_group);
+			load_groups (rootElt);
+			load_students (rootElt);
+			load_teachers (rootElt);
+			load_admins (rootElt);
+		}
+	}
+	
+	private void load_groups (Element root) {
+		List<Element> groupElts = root.getChild("Groups").getChildren("Group");
+		Iterator<Element> itgroup = groupElts.iterator();
+		while(itgroup.hasNext()){
+			Element agroupElt = (Element)itgroup.next();
+			int aIdgroup = Integer.parseInt(agroupElt.getChild("groupId").getText());
+			Group aGroup = new Group(aIdgroup);
+			setGroups(aGroup);
+		}
+	}
+	
+	private void load_students (Element root) {
+		List<Element> studentElts = root.getChild("Students").getChildren("Student");
+		Iterator<Element> itstudent = studentElts.iterator();
+		while(itstudent.hasNext()){
+			Element astudentElt = (Element)itstudent.next();
+			String aLogin = astudentElt.getChild("login").getText();
+			String aFirst_name = astudentElt.getChild("firstname").getText();
+			String aLast_name = astudentElt.getChild("surname").getText();
+			String aPassword = astudentElt.getChild("pwd").getText();				
+			int aId_student = Integer.parseInt(astudentElt.getChild("studentId").getText());
+			int aId_group = Integer.parseInt(astudentElt.getChild("groupId").getText());
+			Student aStudent = new Student(aLogin, aPassword, aFirst_name, aLast_name, aId_student, aId_group);
+			if (getaID (aLogin) == null) {
 				setUsers(aStudent);
 			}
-			List<Element> teacherElts = rootElt.getChild("Teachers").getChildren("Teacher");
-			Iterator<Element> itteacher = teacherElts.iterator();
-			while(itteacher.hasNext()){
-				Element ateacherElt = (Element)itteacher.next();
-				String aLogin = ateacherElt.getChild("login").getText();
-				String aFirst_name = ateacherElt.getChild("firstname").getText();
-				String aLast_name = ateacherElt.getChild("surname").getText();
-				String aPassword = ateacherElt.getChild("pwd").getText();				
-				int aId_teacher = Integer.parseInt(ateacherElt.getChild("teacherId").getText());
-				Teacher aTeacher = new Teacher(aLogin, aPassword, aFirst_name, aLast_name, aId_teacher);
+		}
+	}
+	
+	private void load_teachers (Element root) {
+		List<Element> teacherElts = root.getChild("Teachers").getChildren("Teacher");
+		Iterator<Element> itteacher = teacherElts.iterator();
+		while(itteacher.hasNext()){
+			Element ateacherElt = (Element)itteacher.next();
+			String aLogin = ateacherElt.getChild("login").getText();
+			String aFirst_name = ateacherElt.getChild("firstname").getText();
+			String aLast_name = ateacherElt.getChild("surname").getText();
+			String aPassword = ateacherElt.getChild("pwd").getText();				
+			int aId_teacher = Integer.parseInt(ateacherElt.getChild("teacherId").getText());
+			Teacher aTeacher = new Teacher(aLogin, aPassword, aFirst_name, aLast_name, aId_teacher);
+			if (getaID (aLogin) == null) {
 				setUsers(aTeacher);
 			}
-			List<Element> adminElts = rootElt.getChild("Administrators").getChildren("Administrator");
-			Iterator<Element> itadmin = adminElts.iterator();
-			while(itadmin.hasNext()){
-				Element aadminElt = (Element)itadmin.next();
-				String aLogin = aadminElt.getChild("login").getText();
-				String aFirst_name = aadminElt.getChild("firstname").getText();
-				String aLast_name = aadminElt.getChild("surname").getText();
-				String aPassword = aadminElt.getChild("pwd").getText();				
-				int aId_admin = Integer.parseInt(aadminElt.getChild("adminId").getText());
-				Admin aAdmin = new Admin(aLogin, aPassword, aFirst_name, aLast_name, aId_admin);
+		}
+	}
+	
+	private void load_admins (Element root) {
+		List<Element> adminElts = root.getChild("Administrators").getChildren("Administrator");
+		Iterator<Element> itadmin = adminElts.iterator();
+		while(itadmin.hasNext()){
+			Element aadminElt = (Element)itadmin.next();
+			String aLogin = aadminElt.getChild("login").getText();
+			String aFirst_name = aadminElt.getChild("firstname").getText();
+			String aLast_name = aadminElt.getChild("surname").getText();
+			String aPassword = aadminElt.getChild("pwd").getText();				
+			int aId_admin = Integer.parseInt(aadminElt.getChild("adminId").getText());
+			Admin aAdmin = new Admin(aLogin, aPassword, aFirst_name, aLast_name, aId_admin);
+			if (getaID (aLogin) == null) {
 				setUsers(aAdmin);
 			}
 		}
@@ -247,34 +275,80 @@ public class UserDB {
 		this.file = file;
 	}
 	
-	public User getaUser (int Key) {
-		return Users.get(Key);
+	public User getaUser (String aLogin) {
+		int idfound = -1;
+		if (getaID(aLogin) != null) {
+			idfound = getaID(aLogin);
+		}
+			return Users.get(idfound);
 	}
 
 	public void setUsers(User aUser) {
-		if (aUser instanceof Admin){
-			Users.put(((Admin) aUser).getId_admin(), aUser);
-		}else if(aUser instanceof Teacher){
-			Users.put(((Teacher) aUser).getId_teacher(), aUser);
-		}else if(aUser instanceof Student){
-			Users.put(((Student) aUser).getId_student(), aUser);
+		String login = aUser.getLogin();
+		if(getaUser(login) == null) {
+			if (aUser instanceof Admin){
+				Users.put(((Admin) aUser).getId_admin(), aUser);
+			}else if(aUser instanceof Teacher){
+				Users.put(((Teacher) aUser).getId_teacher(), aUser);
+			}else if(aUser instanceof Student){
+				Users.put(((Student) aUser).getId_student(), aUser);
+			}
+			setIDs(aUser);
+		}else if (getaUser(aUser.getLogin()) != null) {
+			System.out.println("there is already a user with that login in the database");
+		}else if (getaID(aUser.getLogin()) != null) {
+			System.out.println("there is already a user with that id in the database");
 		}
 	}
 
-	public void removeaUser(int Key) {
-		Users.remove(Key) ;
+	public void removeaUser(String aLogin) {
+		if(getaUser(aLogin) != null){
+			if (getaUser(aLogin) instanceof Student) {
+				if(((Student)getaUser(aLogin)).getId_group() != -1) {
+					int Id_group = ((Student)getaUser(aLogin)).getId_group();
+					getaGroup(Id_group).removeaStudent(aLogin);
+				}
+			}
+			Users.remove(getaID(aLogin));
+			removeaID(aLogin);
+			save_users_groups();
+		}else {
+			System.out.println("there is no such user in the database");			
+		}
 	}
 	
-	public Group getaGroup (int Key) {
-		return Groups.get(Key);
+	public Integer getaID (String aLogin) {
+		return IDs.get(aLogin);		
+	}
+	
+	public void setIDs (User aUser) {
+		if (aUser instanceof Admin){
+			IDs.put(((Admin) aUser).getLogin(), ((Admin) aUser).getId_admin());
+		}else if(aUser instanceof Teacher){
+			IDs.put(((Teacher) aUser).getLogin(), ((Teacher) aUser).getId_teacher());
+		}else if(aUser instanceof Student){
+			IDs.put(((Student) aUser).getLogin(), ((Student) aUser).getId_student());
+		}
+	}
+	
+	public void removeaID(String aLogin) {
+		IDs.remove(aLogin);
+	}
+	
+	public Group getaGroup (int aId_group) {
+		return Groups.get(aId_group);
 	}
 
 	public void setGroups(Group aGroup) {
 		Groups.put(aGroup.getId_group(), aGroup);
 	}
 
-	public void removeaGroup(int Key) {
-		Groups.remove(Key) ;
+	public boolean removeaGroup(String adminLogin, int groupId) {
+		boolean Result = false;
+		if (getaUser(adminLogin) instanceof Admin) {
+			Result = Groups.remove(groupId) != null;			
+		}
+		save_users_groups();
+		return Result;
 	}
-
 }

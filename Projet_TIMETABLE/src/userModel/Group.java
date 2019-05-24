@@ -5,12 +5,8 @@ public class Group {
 	
 	private int id_group;
 	private int number_of_students;
-	private Hashtable<Integer,Student> Students = new Hashtable<Integer,Student>();
+	private Hashtable<String,Student> Students = new Hashtable<String,Student>();
 	
-	/**
-	 * Constructor.
-	 * @param aId_group
-	 */
 	public Group(int aId_group) {
 		setId_group(aId_group);
 		setNumber_of_students();
@@ -21,8 +17,8 @@ public class Group {
 	 * @param aId_student
 	 * @return a student in the hash table "Students" who's id is aId_student
 	 */
-	public Student getaStudent(int aId_student) {
-		return Students.get(aId_student);
+	public Student getaStudent(String aLogin_student) {
+		return Students.get(aLogin_student);
 	}
 
 	/**
@@ -30,12 +26,12 @@ public class Group {
 	 * @param aStudent
 	 */
 	public void addaStudent(Student aStudent) {
-		if (getaStudent(aStudent.getId_student()) == null) {
+		if (getaStudent(aStudent.getLogin()) == null) {
 			aStudent.setId_group(getId_group());
-			Students.put(aStudent.getId_student(),aStudent);
+			Students.put(aStudent.getLogin(),aStudent);
 			setNumber_of_students();
 		}else {
-			System.out.println("there is already a student with that Id in this group");
+			System.out.println("there is already a student with that login in this group");
 		}
 	}
 	
@@ -43,13 +39,13 @@ public class Group {
 	 * removes a student from the hash table "Students".
 	 * @param aId_student
 	 */
-	public void removeaStudent(int aId_student) {
-		if (getaStudent(aId_student) != null) {
-			getaStudent(aId_student).setId_group(-1);
-			Students.remove(aId_student);
+	public void removeaStudent(String aLogin_student) {
+		if (getaStudent(aLogin_student) != null) {
+			getaStudent(aLogin_student).setId_group(-1);
+			Students.remove(aLogin_student);
 			setNumber_of_students();
 		}else {
-			System.out.println("there is no such student with that Id in this group");			
+			System.out.println("there is no such student with that login in this group");			
 		}
 	}
 	
