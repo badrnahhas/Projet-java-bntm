@@ -36,65 +36,52 @@ public class UserController implements IUserController
 
 	@Override
 	public String getUserName(String userLogin) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDB.getUserName(userLogin);
 	}
 
 	@Override
 	public String getUserClass(String userLogin, String userPwd) {
-		// TODO Auto-generated method stub
-		return null;
+		return userDB.getUserClass(userLogin, userPwd);
 	}
 
 	@Override
 	public int getStudentGroup(String studentLogin) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDB.getStudentGroup(studentLogin);
 	}
 
 	@Override
-	public boolean addAdmin(String adminLogin, String newAdminlogin, int adminID, String firstname, String surname,
-			String pwd) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addAdmin(String adminLogin, String newAdminlogin, int adminID, String firstname, String surname, String pwd) {
+		return userDB.addanewAdmin(adminLogin, newAdminlogin, adminID, firstname, surname, pwd);
 	}
 
 	@Override
-	public boolean addTeacher(String adminLogin, String newteacherLogin, int teacherID, String firstname,
-			String surname, String pwd) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addTeacher(String adminLogin, String newteacherLogin, int teacherID, String firstname, String surname, String pwd) {
+		return userDB.addanewTeacher(adminLogin, newteacherLogin, teacherID, firstname, surname, pwd);
 	}
 
 	@Override
-	public boolean addStudent(String adminLogin, String newStudentLogin, int studentID, String firstname,
-			String surname, String pwd) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean addStudent(String adminLogin, String newStudentLogin, int studentID, String firstname, String surname, String pwd) {
+		return userDB.addanewStudent(adminLogin, newStudentLogin, studentID, firstname, surname, pwd);
 	}
 
 	@Override
 	public boolean removeUser(String adminLogin, String userLogin) {
-		// TODO Auto-generated method stub
-		return false;
+		return userDB.removeaUser(adminLogin, userLogin);
 	}
 
 	@Override
 	public boolean addGroup(String adminLogin, int groupId) {
-		// TODO Auto-generated method stub
-		return false;
+		return userDB.addanewgroup(adminLogin, groupId);
 	}
 
 	@Override
 	public boolean removeGroup(String adminLogin, int groupId) {
-		// TODO Auto-generated method stub
-		return false;
+		return userDB.removeaGroup(adminLogin, groupId);
 	}
 
 	@Override
 	public boolean associateStudToGroup(String adminLogin, String studentLogin, int groupId) {
-		// TODO Auto-generated method stub
-		return false;
+		return userDB.addStudToGroup(adminLogin, studentLogin, groupId);
 	}
 
 	@Override
@@ -129,14 +116,12 @@ public class UserController implements IUserController
 
 	@Override
 	public boolean loadDB() {
-		// TODO Auto-generated method stub
-		return false;
+		return userDB.load_users_groups();
 	}
 
 	@Override
 	public boolean saveDB() {
-		// TODO Auto-generated method stub
-		return false;
+		return userDB.save_users_groups();
 	}
 
 	public UserDB getUserDB() {

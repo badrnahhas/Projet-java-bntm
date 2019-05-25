@@ -32,18 +32,18 @@ public class UserDB {
 	private String file;
 
 	/**
-	 * Hashtable contenant un ensemble d'id avec pour clé leur login
-	 * pour éviter d'avoir deux même ID et/ou deux même login
+	 * Hashtable contenant un ensemble d'Id avec pour clé un login
+	 * pour éviter d'avoir deux même Id et/ou deux même login
 	 */
 	private Hashtable<String, Integer> IDs = new Hashtable<String, Integer>();
 	
 	/**
-	 * Hashtable contenant un ensemble d'utilisateurs avec pour clé leur id
+	 * Hashtable contenant un ensemble d'utilisateurs avec pour clé leur Id
 	 */
 	private Hashtable<Integer, User> Users = new Hashtable<Integer, User>();
 	
 	/**
-	 *  Hashtable contenant un ensemble de groupes
+	 *  Hashtable contenant un ensemble de groupes avec pour clé leur Id
 	 */
 	private Hashtable<Integer, Group> Groups = new Hashtable<Integer, Group>();
 	
@@ -51,29 +51,147 @@ public class UserDB {
 	 * 
 	 * Constructeur de UserDB. 
 	 * 
-	 * !!!!!!!!!!!! PENSEZ Ã€ AJOUTER UN ADMINISTRATEUR (su par exemple) QUI VOUS PERMETTRA DE CHARGER LA BASE DE DONNÃ‰ES AU DEMARRAGE DE L'APPLICATION !!!!!!
-	 * 
 	 * @param file
 	 * 		Le nom du fichier qui contient la base de données.
 	 */
 	public UserDB(String file){
 		super();
 		this.setFile(file);
-		load_users_groups();
+		Admin FirstAdmin = new Admin("su", "password1", "First", "Admin", 0);
+		setUsers(FirstAdmin);
 	}
 	
-	public void save_users_groups() {
+	public boolean addStudToGroup(String adminLogin, String studentLogin, int groupId) {
+		boolean Result = false;
+		if (getaUser(adminLogin) instanceof Admin) {
+			if (getaGroup(groupId) != null) {
+				if(getaUser(studentLogin) != null){
+					if (getaUser(studentLogin) instanceof Student) {
+						((Student) getaUser(studentLogin)).setId_group(groupId);
+						save_users_groups();
+						Result = true;
+					}else {
+						System.out.println("this user is not a student");
+					}
+				}else {
+					System.out.println("there is no such user with that login in the database");			
+				}
+			}else {
+				System.out.println("there is no such group with that ID in the database");
+			}
+		}else {
+			System.out.println("you are not an admin, therefore, you can not associate a student to a group");
+		}
+		return Result;
+	}
+	
+	public boolean addanewgroup(String adminLogin, int groupId) {
+		boolean Result = false;
+		if (getaUser(adminLogin) instanceof Admin) {
+			Result = setGroups(groupId);
+			if (Result == true) {
+				save_users_groups();	
+			}
+		}else {
+			System.out.println("you are not an admin, therefore, you can not add a new group");
+		}
+		return Result;
+	}
+	
+	public boolean removeaGroup(String adminLogin, int groupId) {
+		boolean Result = false;
+		if (getaUser(adminLogin) instanceof Admin) {
+			Result = (Groups.remove(groupId) != null);
+			if (Result == true) {
+				save_users_groups();	
+			}
+		}else {
+			System.out.println("you are not an admin, therefore, you can not remove any group");
+		}
+		return Result;
+	}
+	
+	public boolean addanewStudent(String adminLogin, String newStudentLogin, int studentID, String firstname, String surname, String pwd) {
+		boolean Result = false;
+		if (getaUser(adminLogin) instanceof Admin) {
+			Student aStudent = new Student(newStudentLogin, pwd, firstname, surname, studentID, -1);
+			Result = setUsers(aStudent);
+			if (Result == true) {
+				save_users_groups();	
+			}
+		}else {
+			System.out.println("you are not an admin, therefore, you can't add a new student");
+		}
+		return Result;
+	}
+	
+	public boolean addanewTeacher(String adminLogin, String newteacherLogin, int teacherID, String firstname, String surname, String pwd) {
+		boolean Result = false;
+		if (getaUser(adminLogin) instanceof Admin) {
+			Teacher aTeacher = new Teacher(newteacherLogin, pwd, firstname, surname, teacherID);
+			Result = setUsers(aTeacher);
+			if (Result == true) {
+				save_users_groups();	
+			}
+		}else {
+			System.out.println("you are not an admin, therefore, you can not add a new teacher");
+		}
+		return Result;
+	}
+	
+	public boolean addanewAdmin(String adminLogin, String newAdminlogin, int adminID, String firstname, String surname, String pwd) {
+		boolean Result = false;
+		if (getaUser(adminLogin) instanceof Admin) {
+			Admin aAdmin = new Admin(newAdminlogin, pwd, firstname, surname, adminID);
+			Result = setUsers(aAdmin);
+			if (Result == true) {
+				save_users_groups();	
+			}
+		}else {
+			System.out.println("you are not an admin, therefore, you can not add a new Administrator");
+		}
+		return Result;
+	}
+	
+	public boolean removeaUser(String adminLogin, String userLogin) {
+		boolean Result = false;
+		if (getaUser(adminLogin) instanceof Admin) {
+			if(getaUser(userLogin) != null){
+				if (getaUser(userLogin) instanceof Student) {
+					if(((Student)getaUser(userLogin)).getId_group() != -1) {
+						int Id_group = ((Student)getaUser(userLogin)).getId_group();
+						getaGroup(Id_group).removeaStudent(userLogin);
+					}
+				}
+				Result = (Users.remove(getaID(userLogin)) != null);
+				if (Result == true) {
+					removeaID(userLogin);
+					save_users_groups();
+				}
+			}else {
+				System.out.println("there is no such user with that login in the database");			
+			}	
+		}else {
+			System.out.println("you are not an admin, therefore, you can not remove any user");
+		}
+		return Result;
+	}
+	
+	public boolean save_users_groups() {
+		boolean Result = false;
 		Element rootElt = new Element("UsersDB");
 		org.jdom2.Document document = new Document(rootElt);
 		save_groups(rootElt);
 		save_students(rootElt);
 		save_teachers(rootElt);
 		save_admins(rootElt);
-		try{ 
+		try{
 			XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
 			sortie.output(document, new FileOutputStream("test_UserDB.xml"));
+			Result = true;
 		}
 		catch (java.io.IOException e){}
+		return Result;
 	}
 	
 	private void save_groups (Element root) {
@@ -173,7 +291,8 @@ public class UserDB {
 		root.addContent(adminsElt);
 	}
 	
-	public void load_users_groups() {
+	public boolean load_users_groups() {
+		boolean Result = false;
 		org.jdom2.Document document = null ;
 		Element rootElt;
 		SAXBuilder sxb = new SAXBuilder();
@@ -187,7 +306,9 @@ public class UserDB {
 			load_students (rootElt);
 			load_teachers (rootElt);
 			load_admins (rootElt);
+			Result = true;
 		}
+		return Result;
 	}
 	
 	private void load_groups (Element root) {
@@ -196,8 +317,7 @@ public class UserDB {
 		while(itgroup.hasNext()){
 			Element agroupElt = (Element)itgroup.next();
 			int aIdgroup = Integer.parseInt(agroupElt.getChild("groupId").getText());
-			Group aGroup = new Group(aIdgroup);
-			setGroups(aGroup);
+			setGroups(aIdgroup);
 		}
 	}
 	
@@ -213,9 +333,7 @@ public class UserDB {
 			int aId_student = Integer.parseInt(astudentElt.getChild("studentId").getText());
 			int aId_group = Integer.parseInt(astudentElt.getChild("groupId").getText());
 			Student aStudent = new Student(aLogin, aPassword, aFirst_name, aLast_name, aId_student, aId_group);
-			if (getaID (aLogin) == null) {
-				setUsers(aStudent);
-			}
+			setUsers(aStudent);
 		}
 	}
 	
@@ -230,9 +348,7 @@ public class UserDB {
 			String aPassword = ateacherElt.getChild("pwd").getText();				
 			int aId_teacher = Integer.parseInt(ateacherElt.getChild("teacherId").getText());
 			Teacher aTeacher = new Teacher(aLogin, aPassword, aFirst_name, aLast_name, aId_teacher);
-			if (getaID (aLogin) == null) {
-				setUsers(aTeacher);
-			}
+			setUsers(aTeacher);
 		}
 	}
 	
@@ -247,9 +363,7 @@ public class UserDB {
 			String aPassword = aadminElt.getChild("pwd").getText();				
 			int aId_admin = Integer.parseInt(aadminElt.getChild("adminId").getText());
 			Admin aAdmin = new Admin(aLogin, aPassword, aFirst_name, aLast_name, aId_admin);
-			if (getaID (aLogin) == null) {
-				setUsers(aAdmin);
-			}
+			setUsers(aAdmin);
 		}
 	}
 	
@@ -274,6 +388,68 @@ public class UserDB {
 	public void setFile(String file) {
 		this.file = file;
 	}
+
+	public int getStudentGroup(String studentLogin) {
+		int Result = -1;
+		if(getaUser(studentLogin) != null) {
+			if(getaUser(studentLogin) instanceof Student){
+				Result = ((Student) getaUser(studentLogin)).getId_group();
+				if (Result == -1) {
+					System.out.println("this student has not been associated to a group");
+				}
+			}else {
+				System.out.println("this user is not a student");
+			}
+		}else {
+			System.out.println("there is no such user with that login in the database");
+		}
+		return Result;
+	}
+	 
+	public Group getaGroup (int aId_group) {
+		return Groups.get(aId_group);
+	}
+	
+	public boolean setGroups(int aIdgroup) {
+		boolean Result = false;
+		if (getaGroup(aIdgroup) == null) {
+			Group aGroup = new Group(aIdgroup);
+			Result = (Groups.put(aIdgroup, aGroup) == null);
+		}else {
+			System.out.println("there is already a group with that ID in the database");
+		}
+		return Result;
+	}
+
+	public String getUserClass(String userLogin, String userPwd) {
+		String Userclass = "";
+		if(getaUser(userLogin) != null){
+			if(getaUser(userLogin).getPassword() == userPwd) {
+				if (getaUser(userLogin) instanceof Admin){
+					Userclass = "Administrator";
+				}else if(getaUser(userLogin) instanceof Teacher){
+					Userclass = "Teacher";
+				}else if(getaUser(userLogin) instanceof Student){
+					Userclass = "Student";
+				}
+			}else {
+				System.out.println("wrong login or password");			
+			}
+		}else {
+			System.out.println("wrong login or password");			
+		}	
+		return Userclass;
+	}
+	
+	public String getUserName(String userLogin) {
+		String fullname = "";
+		if(getaUser(userLogin) != null){
+			fullname = getaUser(userLogin).getFirst_name() + " " + getaUser(userLogin).getLast_name();
+		}else {
+			System.out.println("there is no such user with that login in the database");
+		}	
+		return fullname;
+	}
 	
 	public User getaUser (String aLogin) {
 		int idfound = -1;
@@ -282,39 +458,28 @@ public class UserDB {
 		}
 			return Users.get(idfound);
 	}
-
-	public void setUsers(User aUser) {
-		String login = aUser.getLogin();
-		if(getaUser(login) == null) {
+	
+	public boolean setUsers(User aUser) {
+		boolean Result = false;
+		if(getaUser(aUser.getLogin()) == null) {
+			int ID = -1;
 			if (aUser instanceof Admin){
-				Users.put(((Admin) aUser).getId_admin(), aUser);
+				ID = ((Admin) aUser).getId_admin();
 			}else if(aUser instanceof Teacher){
-				Users.put(((Teacher) aUser).getId_teacher(), aUser);
+				ID = ((Teacher) aUser).getId_teacher();
 			}else if(aUser instanceof Student){
-				Users.put(((Student) aUser).getId_student(), aUser);
+				ID = ((Student) aUser).getId_student();
 			}
-			setIDs(aUser);
-		}else if (getaUser(aUser.getLogin()) != null) {
-			System.out.println("there is already a user with that login in the database");
-		}else if (getaID(aUser.getLogin()) != null) {
-			System.out.println("there is already a user with that id in the database");
-		}
-	}
-
-	public void removeaUser(String aLogin) {
-		if(getaUser(aLogin) != null){
-			if (getaUser(aLogin) instanceof Student) {
-				if(((Student)getaUser(aLogin)).getId_group() != -1) {
-					int Id_group = ((Student)getaUser(aLogin)).getId_group();
-					getaGroup(Id_group).removeaStudent(aLogin);
-				}
+			if (Users.get(ID) == null) {
+				Result = (Users.put(ID, aUser) == null);
+				setIDs(aUser);
+			}else {
+				System.out.println("there is already a user with that ID in the database");
 			}
-			Users.remove(getaID(aLogin));
-			removeaID(aLogin);
-			save_users_groups();
 		}else {
-			System.out.println("there is no such user in the database");			
+			System.out.println("there is already a user with that login in the database");
 		}
+		return Result;
 	}
 	
 	public Integer getaID (String aLogin) {
@@ -335,20 +500,4 @@ public class UserDB {
 		IDs.remove(aLogin);
 	}
 	
-	public Group getaGroup (int aId_group) {
-		return Groups.get(aId_group);
-	}
-
-	public void setGroups(Group aGroup) {
-		Groups.put(aGroup.getId_group(), aGroup);
-	}
-
-	public boolean removeaGroup(String adminLogin, int groupId) {
-		boolean Result = false;
-		if (getaUser(adminLogin) instanceof Admin) {
-			Result = Groups.remove(groupId) != null;			
-		}
-		save_users_groups();
-		return Result;
-	}
 }
