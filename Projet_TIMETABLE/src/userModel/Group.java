@@ -79,5 +79,10 @@ public class Group {
 	public void setNumber_of_students() {
 		this.number_of_students = Students.size();
 	}
+
+	@Override
+	public String toString() {
+		return "Group [id_group = " + id_group + ", number_of_students = " + number_of_students + ", Students = " + Students + "]";
+	}
 	
 }

@@ -67,7 +67,7 @@ public class UserDB {
 			if (getaGroup(groupId) != null) {
 				if(getaUser(studentLogin) != null){
 					if (getaUser(studentLogin) instanceof Student) {
-						((Student) getaUser(studentLogin)).setId_group(groupId);
+						getaGroup(groupId).addaStudent(((Student) getaUser(studentLogin)));
 						save_users_groups();
 						Result = true;
 					}else {
@@ -405,7 +405,27 @@ public class UserDB {
 		}
 		return Result;
 	}
-	 
+
+	public String[] groupsIdToString() {
+		String[] groupsIDs = new String[Groups.size()];
+		int i=0;
+		for(Entry<Integer, Group> entry : Groups.entrySet()) {
+			groupsIDs[i]= String.valueOf(entry.getValue().getId_group());
+			i++;
+		}
+		return groupsIDs;
+	}
+	
+	public String[] groupsToString() {
+		String[] groupsInfo = new String[Groups.size()];
+		int i=0;
+		for(Entry<Integer, Group> entry : Groups.entrySet()) {
+			groupsInfo[i]= entry.getValue().toString();
+			i++;
+		}
+		return groupsInfo;
+	}
+	
 	public Group getaGroup (int aId_group) {
 		return Groups.get(aId_group);
 	}
@@ -449,6 +469,44 @@ public class UserDB {
 			System.out.println("there is no such user with that login in the database");
 		}	
 		return fullname;
+	}
+
+	public String[] usersToString() {
+		String[] USersInfo = new String[Users.size()];
+		int i=0;
+		for(Entry<Integer, User> entry : Users.entrySet()) {
+			USersInfo[i]= entry.getValue().toString();
+			i++;
+		}
+		return USersInfo;
+	}
+
+	public String[] usersLoginToString() {
+		String[] USersLogins = new String[Users.size()];
+		int i=0;
+		for(Entry<Integer, User> entry : Users.entrySet()) {
+			USersLogins[i]= entry.getValue().getLogin();
+			i++;
+		}
+		return USersLogins;
+	}
+	
+	public String[] studentsLoginToString() {
+		int i=0;
+		for(Entry<Integer, User> entry : Users.entrySet()) {
+			if (entry.getValue() instanceof Student) {
+				i++;				
+			}
+		}
+		String[] StudentsLogins = new String[i];
+		i = 0;
+		for(Entry<Integer, User> entry : Users.entrySet()) {
+			if (entry.getValue() instanceof Student) {
+				StudentsLogins[i]= entry.getValue().getLogin();
+				i++;				
+			}
+		}
+		return StudentsLogins;
 	}
 	
 	public User getaUser (String aLogin) {

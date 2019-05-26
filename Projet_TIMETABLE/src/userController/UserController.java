@@ -86,32 +86,27 @@ public class UserController implements IUserController
 
 	@Override
 	public String[] usersToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return userDB.usersToString();
 	}
 
 	@Override
 	public String[] usersLoginToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return userDB.usersLoginToString();
 	}
 
 	@Override
 	public String[] studentsLoginToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return userDB.studentsLoginToString();
 	}
 
 	@Override
 	public String[] groupsIdToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return userDB.groupsIdToString();
 	}
 
 	@Override
 	public String[] groupsToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return userDB.groupsToString();
 	}
 
 	@Override
@@ -131,8 +126,5 @@ public class UserController implements IUserController
 	public void setUserDB(UserDB userDB) {
 		this.userDB = userDB;
 	}
-	
-	
 
 }
-
