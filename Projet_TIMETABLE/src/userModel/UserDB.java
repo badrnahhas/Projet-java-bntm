@@ -57,7 +57,7 @@ public class UserDB {
 	public UserDB(String file){
 		super();
 		this.setFile(file);
-		Admin FirstAdmin = new Admin("su", "password1", "First", "Admin", 0);
+		Admin FirstAdmin = new Admin("su", "123456", "First", "Admin", 0);
 		setUsers(FirstAdmin);
 	}
 	
@@ -444,7 +444,7 @@ public class UserDB {
 	public String getUserClass(String userLogin, String userPwd) {
 		String Userclass = "";
 		if(getaUser(userLogin) != null){
-			if(getaUser(userLogin).getPassword() == userPwd) {
+			if(getaUser(userLogin).getPassword().equals(userPwd)) {
 				if (getaUser(userLogin) instanceof Admin){
 					Userclass = "Administrator";
 				}else if(getaUser(userLogin) instanceof Teacher){
@@ -452,11 +452,12 @@ public class UserDB {
 				}else if(getaUser(userLogin) instanceof Student){
 					Userclass = "Student";
 				}
+				System.out.println("user connected");
 			}else {
-				System.out.println("wrong login or password");			
+				System.out.println("wrong password");
 			}
 		}else {
-			System.out.println("wrong login or password");			
+			System.out.println("wrong login");			
 		}	
 		return Userclass;
 	}
