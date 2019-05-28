@@ -19,15 +19,19 @@ public class Timetable {
 	}
 
 	public Reservation getaReservation (int Key) {
-		return Reservations.get(Key);
+		return getReservations().get(Key);
 	}
 
 	public void setReservations(Reservation aReservation) {
-		Reservations.put(aReservation.getNumber_of_reservation(), aReservation) ;
+		getReservations().put(aReservation.getReservation_number(), aReservation) ;
 	}
 	
 	public void removeaReservation(int Key) {
-		Reservations.remove(Key) ;
+		getReservations().remove(Key) ;
+	}
+	
+	public Hashtable<Integer, Reservation> getReservations() {
+		return this.Reservations;
 	}
 	
 }

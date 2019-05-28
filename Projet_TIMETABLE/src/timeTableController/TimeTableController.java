@@ -5,29 +5,29 @@ import java.util.Hashtable;
 
 import timeTableModel.TimeTableDB;
 /**
- * Cette classe est le contrÃ´leur d'emplois du temps que vous devez implÃ©menter. 
- * Elle contient un attribut correspondant Ã  la base de donnÃ©es d'emplois du temps que vous allez crÃ©er.
- * Elle contient toutes les fonctions de l'interface ITimeTableController que vous devez implÃ©menter.
+ * Cette classe est le contrôleur d'emplois du temps que vous devez implémenter. 
+ * Elle contient un attribut correspondant à la base de données d'emplois du temps que vous allez créer.
+ * Elle contient toutes les fonctions de l'interface ITimeTableController que vous devez implémenter.
  * 
- * @author Jose Mennesson (Mettre Ã  jour)
- * @version 04/2016 (Mettre Ã  jour)
+ * @author Jose Mennesson (Mettre à jour)
+ * @version 04/2016 (Mettre à jour)
  * 
  */
 
-//TODO Classe Ã  modifier
+//TODO Classe à modifier
 
 public class TimeTableController implements ITimeTableController{
 
 	/**
-	 * Contient une instance de base de donnÃ©es d'emplois du temps
+	 * Contient une instance de base de données d'emplois du temps
 	 * 
 	 */
 	TimeTableDB tTDB;
 	/**
-	 * Constructeur de controleur d'emplois du temps crÃ©ant la base de donnÃ©es d'emplois du temps
+	 * Constructeur de controleur d'emplois du temps créant la base de données d'emplois du temps
 	 * 
 	 * @param tTfile
-	 * 		Fichier XML contenant la base de donnÃ©es d'emplois du temps
+	 * 		Fichier XML contenant la base de données d'emplois du temps
 	 */
 	public TimeTableController(String tTfile) {
 		TimeTableDB tTDB=new TimeTableDB(tTfile);
@@ -41,39 +41,35 @@ public class TimeTableController implements ITimeTableController{
 	}
 
 	@Override
-	public String[] roomsIdToString() {
-		// TODO Auto-generated method stub
-		return null;
+	public String[] roomsIdToString() {		
+		return this.tTDB.roomsIDToString();
 	}
 
 	@Override
 	public String[] roomsToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.tTDB.roomsToSTring();
+		
 	}
 
 	@Override
 	public String[] timeTablesIDToString() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.tTDB.timeTablesIDToSTring();		
 	}
 
 	@Override
 	public String[] booksIdToString(int timeTableId) {
-		// TODO Auto-generated method stub
+		return this.tTDB.booksIdToSTring(timeTableId);
 		return null;
 	}
 
 	@Override
 	public boolean addRoom(int roomId, int capacity) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.tTDB.addRoom(roomId, capacity);
 	}
 
 	@Override
 	public boolean removeRoom(int roomId) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.tTDB.removeRoom(roomId);
 	}
 
 	@Override
@@ -84,14 +80,12 @@ public class TimeTableController implements ITimeTableController{
 
 	@Override
 	public boolean addTimeTable(int timeTableId) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.tTDB.addTimeTable(timeTableId);		
 	}
 
 	@Override
 	public boolean removeTimeTable(int timeTableId) {
-		// TODO Auto-generated method stub
-		return false;
+		return this.tTDB.removeTimeTable(timeTableId);
 	}
 
 	@Override
@@ -120,16 +114,12 @@ public class TimeTableController implements ITimeTableController{
 
 	@Override
 	public boolean saveDB() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.tTDB.save_classrooms_timetables();
 	}
 
 	@Override
 	public boolean loadDB() {
-		// TODO Auto-generated method stub
-		return false;
+		return this.tTDB.load_classrooms_timetables();
 	}
-	
-	
 
 }

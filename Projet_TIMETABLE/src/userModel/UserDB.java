@@ -293,7 +293,7 @@ public class UserDB {
 	
 	public boolean load_users_groups() {
 		boolean Result = false;
-		org.jdom2.Document document = null ;
+		org.jdom2.Document document = null;
 		Element rootElt;
 		SAXBuilder sxb = new SAXBuilder();
 		try{
@@ -333,6 +333,14 @@ public class UserDB {
 			int aId_student = Integer.parseInt(astudentElt.getChild("studentId").getText());
 			int aId_group = Integer.parseInt(astudentElt.getChild("groupId").getText());
 			Student aStudent = new Student(aLogin, aPassword, aFirst_name, aLast_name, aId_student, aId_group);
+			if (aId_group != -1) {
+				if (getaGroup(aId_group) != null) {
+					getaGroup(aId_group).addaStudent(aStudent);
+				}else {
+					System.out.println("this student's group ID is incorrect, it will automatically be set to -1");
+					aStudent.setId_group(-1);
+				}
+			}
 			setUsers(aStudent);
 		}
 	}
