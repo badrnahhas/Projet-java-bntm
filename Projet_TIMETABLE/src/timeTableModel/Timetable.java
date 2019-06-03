@@ -10,24 +10,25 @@ public class Timetable {
 	public Timetable (int aId_timetable) {
 		setId_timetable(aId_timetable);
 	}
-	public int getId_timetable() {
-		return this.id_timetable;
-	}
 
-	public void setId_timetable(int aId_timetable) {
-		this.id_timetable = aId_timetable;
-	}
-
-	public Reservation getaReservation (int Key) {
-		return getReservations().get(Key);
+	public Reservation getaReservation (int reservation_number) {
+		return getReservations().get(reservation_number);
 	}
 
 	public void setReservations(Reservation aReservation) {
 		getReservations().put(aReservation.getReservation_number(), aReservation) ;
 	}
 	
-	public void removeaReservation(int Key) {
-		getReservations().remove(Key) ;
+	public void removeaReservation(int reservation_number) {
+		getReservations().remove(reservation_number) ;
+	}
+	
+	public int getId_timetable() {
+		return this.id_timetable;
+	}
+
+	public void setId_timetable(int aId_timetable) {
+		this.id_timetable = aId_timetable;
 	}
 	
 	public Hashtable<Integer, Reservation> getReservations() {

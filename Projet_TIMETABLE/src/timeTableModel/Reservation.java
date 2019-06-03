@@ -50,7 +50,7 @@ public class Reservation {
 	}
 
 	public Classroom getClassroom_reserved() {
-		return classroom_reserved;
+		return this.classroom_reserved;
 	}
 
 	public void setClassroom_reserved(Classroom aClassroom_reserved) {

@@ -25,5 +25,10 @@ public class Classroom {
 	public void setStudent_capacity (int aStudent_capacity) {
 		this.student_capacity = aStudent_capacity;
 	}
+
+	@Override
+	public String toString() {
+		return "Classroom [id_classroom = " + id_classroom + ", student_capacity = " + student_capacity + "]";
+	}
 	
 }

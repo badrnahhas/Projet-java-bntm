@@ -30,97 +30,97 @@ public class UserController implements IUserController
 	 * 		Fichier XML contenant la base de données d'utilisateurs
 	 */
 	public UserController(String userfile){
-		UserDB userDB=new UserDB(userfile);
-		this.setUserDB(userDB);
+		UserDB userDB = new UserDB(userfile);
+		setUserDB(userDB);
 	}
 
 	@Override
 	public String getUserName(String userLogin) {
-		return userDB.getUserName(userLogin);
+		return getUserDB().getUserName(userLogin);
 	}
 
 	@Override
 	public String getUserClass(String userLogin, String userPwd) {
-		return userDB.getUserClass(userLogin, userPwd);
+		return getUserDB().getUserClass(userLogin, userPwd);
 	}
 
 	@Override
 	public int getStudentGroup(String studentLogin) {
-		return userDB.getStudentGroup(studentLogin);
+		return getUserDB().getStudentGroup(studentLogin);
 	}
 
 	@Override
 	public boolean addAdmin(String adminLogin, String newAdminlogin, int adminID, String firstname, String surname, String pwd) {
-		return userDB.addanewAdmin(adminLogin, newAdminlogin, adminID, firstname, surname, pwd);
+		return getUserDB().addanewAdmin(adminLogin, newAdminlogin, adminID, firstname, surname, pwd);
 	}
 
 	@Override
 	public boolean addTeacher(String adminLogin, String newteacherLogin, int teacherID, String firstname, String surname, String pwd) {
-		return userDB.addanewTeacher(adminLogin, newteacherLogin, teacherID, firstname, surname, pwd);
+		return getUserDB().addanewTeacher(adminLogin, newteacherLogin, teacherID, firstname, surname, pwd);
 	}
 
 	@Override
 	public boolean addStudent(String adminLogin, String newStudentLogin, int studentID, String firstname, String surname, String pwd) {
-		return userDB.addanewStudent(adminLogin, newStudentLogin, studentID, firstname, surname, pwd);
+		return getUserDB().addanewStudent(adminLogin, newStudentLogin, studentID, firstname, surname, pwd);
 	}
 
 	@Override
 	public boolean removeUser(String adminLogin, String userLogin) {
-		return userDB.removeaUser(adminLogin, userLogin);
+		return getUserDB().removeaUser(adminLogin, userLogin);
 	}
 
 	@Override
 	public boolean addGroup(String adminLogin, int groupId) {
-		return userDB.addanewgroup(adminLogin, groupId);
+		return getUserDB().addanewgroup(adminLogin, groupId);
 	}
 
 	@Override
 	public boolean removeGroup(String adminLogin, int groupId) {
-		return userDB.removeaGroup(adminLogin, groupId);
+		return getUserDB().removeaGroup(adminLogin, groupId);
 	}
 
 	@Override
 	public boolean associateStudToGroup(String adminLogin, String studentLogin, int groupId) {
-		return userDB.addStudToGroup(adminLogin, studentLogin, groupId);
+		return getUserDB().addStudToGroup(adminLogin, studentLogin, groupId);
 	}
 
 	@Override
 	public String[] usersToString() {
-		return userDB.usersToString();
+		return getUserDB().usersToString();
 	}
 
 	@Override
 	public String[] usersLoginToString() {
-		return userDB.usersLoginToString();
+		return getUserDB().usersLoginToString();
 	}
 
 	@Override
 	public String[] studentsLoginToString() {
-		return userDB.studentsLoginToString();
+		return getUserDB().studentsLoginToString();
 	}
 
 	@Override
 	public String[] groupsIdToString() {
-		return userDB.groupsIdToString();
+		return getUserDB().groupsIdToString();
 	}
 
 	@Override
 	public String[] groupsToString() {
-		return userDB.groupsToString();
+		return getUserDB().groupsToString();
 	}
 
 	@Override
 	public boolean loadDB() {
-		return userDB.load_users_groups();
+		return getUserDB().load_users_groups();
 	}
 
 	@Override
 	public boolean saveDB() {
-		return userDB.save_users_groups();
+		return getUserDB().save_users_groups();
 	}
 
 	public UserDB getUserDB() {
-		return userDB;
+		return this.userDB;
 	}
 
 	public void setUserDB(UserDB userDB) {

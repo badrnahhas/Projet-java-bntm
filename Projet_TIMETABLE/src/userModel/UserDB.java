@@ -20,7 +20,7 @@ import org.jdom2.output.XMLOutputter;
  * @see <a href="../../userDB.xml">userDB.xml</a> 
  * 
  * @author Badreddine NAHHAS - Nicolas TOUSCH
- * @version 22/05/2019
+ * @version 06/2019
  * 
  */
 

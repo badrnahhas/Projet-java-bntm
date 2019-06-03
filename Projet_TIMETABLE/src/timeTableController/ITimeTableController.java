@@ -14,8 +14,6 @@ import java.util.Hashtable;
  * 
  */
 
-//TODO Classe à ne pas modifier
-
 public interface ITimeTableController {
 	/**
 	 * Fonction permettant de récupérer le login du professeur qui a réalisé la réservation dont l'identifiant est bookId dans l'emploi du temps dont l'identifiant est timeTableId. 
@@ -126,7 +124,7 @@ public interface ITimeTableController {
 	 * tableau de chaînes de caractères où chaque ligne contient l'identifiant d'une salle.
 	 * 
 	 * @return
-	 * 		Un tableau de String contenant toutes les informations de tous les groupes.
+	 * 		Un tableau de String contenant l'identifiant de toutes les salles.
 	 */
 	public String[] roomsIdToString();
 	/**
@@ -142,7 +140,7 @@ public interface ITimeTableController {
 	 * tableau de chaînes de caractères où chaque ligne contient l'identifiant d'un emploi du temps.
 	 * 
 	 * @return
-	 * 		Un tableau de String contenant toutes les identifiants de tous les emplois du temps.
+	 * 		Un tableau de String contenant tous les identifiants de tous les emplois du temps.
 	 */
 	public String[] timeTablesIDToString();
 	/**
@@ -152,7 +150,7 @@ public interface ITimeTableController {
 	 * @param timeTableId
 	 * 			Un identifiant d'emploi du temps
 	 * @return
-	 * 		Un tableau de String contenant toutes les informations de tous les groupes.
+	 * 		Un tableau de String contenant tous les identifiants de toutes les r�servations de l'emploi du temps choisi.
 	 */
 	public String[] booksIdToString(int timeTableId);
 	/**
