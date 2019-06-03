@@ -56,7 +56,7 @@ public class UserDB {
 	 */
 	public UserDB(String file){
 		super();
-		this.setFile(file);
+		setFile(file);
 		Admin FirstAdmin = new Admin("su", "123456", "First", "Admin", 0);
 		setUsers(FirstAdmin);
 	}
@@ -297,7 +297,7 @@ public class UserDB {
 		Element rootElt;
 		SAXBuilder sxb = new SAXBuilder();
 		try{
-			document = sxb.build(new File(this.file));
+			document = sxb.build(new File(getFile()));
 		}
 		catch(Exception e){}
 		if(document!=null){
@@ -373,28 +373,6 @@ public class UserDB {
 			Admin aAdmin = new Admin(aLogin, aPassword, aFirst_name, aLast_name, aId_admin);
 			setUsers(aAdmin);
 		}
-	}
-	
-	/**
-	 * Getter de file
-	 * 
-	 * @return 
-	 * 		Le nom du fichier qui contient la base de donnÃ©es.
-	 */
-	
-	public String getFile() {
-		return file;
-	}
-	
-	/**
-	 * Setter de file
-	 * 
-	 * @param file
-	 * 		Le nom du fichier qui contient la base de données.
-	 */
-	
-	public void setFile(String file) {
-		this.file = file;
 	}
 
 	public int getStudentGroup(String studentLogin) {
@@ -565,6 +543,28 @@ public class UserDB {
 	
 	public void removeaID(String aLogin) {
 		IDs.remove(aLogin);
+	}
+	
+	/**
+	 * Getter de file
+	 * 
+	 * @return 
+	 * 		Le nom du fichier qui contient la base de données.
+	 */
+	
+	public String getFile() {
+		return this.file;
+	}
+	
+	/**
+	 * Setter de file
+	 * 
+	 * @param file
+	 * 		Le nom du fichier qui contient la base de données.
+	 */
+	
+	public void setFile(String file) {
+		this.file = file;
 	}
 	
 }
