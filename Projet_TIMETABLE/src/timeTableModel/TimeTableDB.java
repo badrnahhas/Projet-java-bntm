@@ -19,42 +19,45 @@ import org.jdom2.output.XMLOutputter;
 
 /**
  * 
- * Cette classe gère la base de données d'emplois du temps. Elle doit permettre de sauvegarder et charger les emplois du temps ainsi que les salles à partir d'un fichier XML. 
- * La structure du fichier XML devra être la même que celle du fichier TimeTableDB.xml.
+ * Cette classe gÃ©re la base de donnÃ©es d'emplois du temps. Elle doit permettre de sauvegarder et charger les emplois du temps ainsi que les salles Ã  partir d'un fichier XML. 
+ * La structure du fichier XML devra Ãªtre la mÃªme que celle du fichier TimeTableDB.xml.
  * @see <a href="../../TimeTableDB.xml">TimeTableDB.xml</a> 
  * 
- * @author Badreddine NAHHAS - Nicolas TOUSCH
- * @version 06/2019
+ * @author Jose Mennesson (Mettre Ã  jour)
+ * @version 04/2016 (Mettre Ã  jour)
  * 
  */
 
+//TODO Classe Ã  modifier
+
 public class TimeTableDB {
 	/**
-	 * Le fichier contenant la base de données.
+	 * 
+	 * Le fichier contenant la base de donnÃ©es.
 	 * 
 	 */
 	private String file;
 	/**
+	 * 
 	 * Constructeur de TimeTableDB. 
 	 * 
 	 * @param file
-	 * 		Le nom du fichier qui contient la base de données.
+	 * 		Le nom du fichier qui contient la base de donnÃ©es.
 	 */
 	
 	private Hashtable<Integer, Timetable> Timetables = new Hashtable<Integer, Timetable>();
 	private Hashtable<Integer, Classroom> Classrooms = new Hashtable<Integer, Classroom>();
 	
 	public TimeTableDB(String file){
-		
 		super();
-		this.setFile(file);
-		
+		setFile(file);
 	}
+	
 	/**
 	 * Getter de file
 	 * 
 	 * @return 
-	 * 		Le nom du fichier qui contient la base de données.
+	 * 		Le nom du fichier qui contient la base de donnÃ©es.
 	 */
 	public String getFile() {
 		return file;
@@ -63,7 +66,7 @@ public class TimeTableDB {
 	 * Setter de file
 	 * 
 	 * @param file
-	 * 		Le nom du fichier qui contient la base de données.
+	 * 		Le nom du fichier qui contient la base de donnÃ©es.
 	 */
 	public void setFile(String file) {
 		this.file = file;
@@ -209,7 +212,7 @@ public class TimeTableDB {
 			Reservation Value = entry.getValue();
 			areservation_numberElt.setText(Integer.toString(Value.getReservation_number()));
 			ateacher_loginElt.setText(Value.getTeacher_login());
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			astart_dateElt.setText(formatter.format(Value.getStart_date()));
 			aend_dateElt.setText(formatter.format(Value.getEnd_date()));
 			aclassroomIdElt.setText(Integer.toString(Value.getClassroom_reserved().getId_classroom()));
@@ -272,7 +275,7 @@ public class TimeTableDB {
 			Element areservationElt = (Element)itreservation.next();
 			int aReservation_number = Integer.parseInt(areservationElt.getChild("BookingId").getText());
 			String aTeacher_Login = areservationElt.getChild("Login").getText();
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			Date astart_date = new Date();
 			try {
 				astart_date = formatter.parse(areservationElt.getChild("DateBegin").getText());

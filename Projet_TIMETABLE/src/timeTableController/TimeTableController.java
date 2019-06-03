@@ -116,7 +116,7 @@ public class TimeTableController implements ITimeTableController{
 	}
 
 	public TimeTableDB gettTDB() {
-		return tTDB;
+		return this.tTDB;
 	}
 
 	public void settTDB(TimeTableDB tTDB) {
