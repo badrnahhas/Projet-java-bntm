@@ -57,7 +57,7 @@ public class UserDB {
 	public UserDB(String file){
 		super();
 		setFile(file);
-		Admin FirstAdmin = new Admin("niconahhas", "123456", "First", "Admin", 0);
+		Admin FirstAdmin = new Admin("niconahhas", "123456", "First", "Admin", 1000);
 		setUsers(FirstAdmin);
 		load_users_groups();
 	}
