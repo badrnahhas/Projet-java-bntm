@@ -231,7 +231,7 @@ public class TimeTableDB {
 		Element rootElt;
 		SAXBuilder sxb = new SAXBuilder();
 		try{
-			document = sxb.build(new File(this.file));
+			document = sxb.build(new File(getFile()));
 		}
 		catch(Exception e){}
 		if(document!=null){
