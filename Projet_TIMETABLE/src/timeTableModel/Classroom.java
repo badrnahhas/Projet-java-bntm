@@ -28,7 +28,7 @@ public class Classroom {
 
 	@Override
 	public String toString() {
-		return "Classroom [id_classroom = " + id_classroom + ", student_capacity = " + student_capacity + "]";
+		return "Classroom " + id_classroom + " : capacity = " + student_capacity;
 	}
 	
 }

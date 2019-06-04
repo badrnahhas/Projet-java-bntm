@@ -82,7 +82,7 @@ public class Group {
 
 	@Override
 	public String toString() {
-		return "Group [id_group = " + id_group + ", number_of_students = " + number_of_students + ", Students = " + Students + "]";
+		return "Group " + id_group + " : number of students = " + number_of_students;
 	}
 	
 }

@@ -57,8 +57,9 @@ public class UserDB {
 	public UserDB(String file){
 		super();
 		setFile(file);
-		Admin FirstAdmin = new Admin("su", "123456", "First", "Admin", 0);
+		Admin FirstAdmin = new Admin("niconahhas", "123456", "First", "Admin", 0);
 		setUsers(FirstAdmin);
+		load_users_groups();
 	}
 	
 	public boolean addStudToGroup(String adminLogin, String studentLogin, int groupId) {
@@ -462,7 +463,17 @@ public class UserDB {
 		String[] USersInfo = new String[Users.size()];
 		int i=0;
 		for(Entry<Integer, User> entry : Users.entrySet()) {
-			USersInfo[i]= entry.getValue().toString();
+			if (entry.getValue() instanceof Student) {
+				String Student_ID = String.valueOf(((Student)entry.getValue()).getId_student());
+				String group_ID = String.valueOf(((Student)entry.getValue()).getId_group());				
+				USersInfo[i]= "Student : " + Student_ID + " | " + entry.getValue().toString() + " | " + group_ID;				
+			}else if (entry.getValue() instanceof Admin) {
+				String Admin_ID = String.valueOf(((Admin)entry.getValue()).getId_admin());
+				USersInfo[i]= "Admin : " + Admin_ID + " | " + entry.getValue().toString();	
+			}else if (entry.getValue() instanceof Teacher) {
+				String Teacher_ID = String.valueOf(((Teacher)entry.getValue()).getId_teacher());
+				USersInfo[i]= "Teacher : " + Teacher_ID + " | " + entry.getValue().toString();	
+			}
 			i++;
 		}
 		return USersInfo;

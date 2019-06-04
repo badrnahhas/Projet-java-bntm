@@ -19,21 +19,19 @@ import org.jdom2.output.XMLOutputter;
 
 /**
  * 
- * Cette classe gÃ©re la base de donnÃ©es d'emplois du temps. Elle doit permettre de sauvegarder et charger les emplois du temps ainsi que les salles Ã  partir d'un fichier XML. 
- * La structure du fichier XML devra Ãªtre la mÃªme que celle du fichier TimeTableDB.xml.
+ * Cette classe gère la base de données d'emplois du temps. Elle doit permettre de sauvegarder et charger les emplois du temps ainsi que les salles à partir d'un fichier XML. 
+ * La structure du fichier XML devra être la même que celle du fichier TimeTableDB.xml.
  * @see <a href="../../TimeTableDB.xml">TimeTableDB.xml</a> 
  * 
- * @author Jose Mennesson (Mettre Ã  jour)
- * @version 04/2016 (Mettre Ã  jour)
+ * @author Badreddine NAHHAS - Nicolas TOUSCH
+ * @version 06/2019
  * 
  */
-
-//TODO Classe Ã  modifier
 
 public class TimeTableDB {
 	/**
 	 * 
-	 * Le fichier contenant la base de donnÃ©es.
+	 * Le fichier contenant la base de données.
 	 * 
 	 */
 	private String file;
@@ -42,7 +40,7 @@ public class TimeTableDB {
 	 * Constructeur de TimeTableDB. 
 	 * 
 	 * @param file
-	 * 		Le nom du fichier qui contient la base de donnÃ©es.
+	 * 		Le nom du fichier qui contient la base de données.
 	 */
 	
 	private Hashtable<Integer, Timetable> Timetables = new Hashtable<Integer, Timetable>();
@@ -51,13 +49,14 @@ public class TimeTableDB {
 	public TimeTableDB(String file){
 		super();
 		setFile(file);
+		load_classrooms_timetables();
 	}
 	
 	/**
 	 * Getter de file
 	 * 
 	 * @return 
-	 * 		Le nom du fichier qui contient la base de donnÃ©es.
+	 * 		Le nom du fichier qui contient la base de données.
 	 */
 	public String getFile() {
 		return file;
@@ -66,7 +65,7 @@ public class TimeTableDB {
 	 * Setter de file
 	 * 
 	 * @param file
-	 * 		Le nom du fichier qui contient la base de donnÃ©es.
+	 * 		Le nom du fichier qui contient la base de données.
 	 */
 	public void setFile(String file) {
 		this.file = file;
