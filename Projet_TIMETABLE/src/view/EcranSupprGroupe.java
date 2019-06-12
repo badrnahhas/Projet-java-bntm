@@ -38,13 +38,13 @@ public class EcranSupprGroupe extends JFrame{
         		valeurAjouterGroupe = Integer.parseInt(stringAjouterGroupe); 
 	        	if(userController.removeGroup(stringLoginArg, valeurAjouterGroupe) == true)
 	        	{
-	        		JOptionPane.showMessageDialog(okSupprGroupe, "Utilisateur supprimé");
+	        		JOptionPane.showMessageDialog(okSupprGroupe, "Groupe supprimé");
 	        		System.out.println(valeurAjouterGroupe);
 	        		setVisible(false);
 	        	}
 	        	else
 	        	{
-	        		JOptionPane.showMessageDialog(okSupprGroupe, "L'utilisateur n'existe pas");
+	        		JOptionPane.showMessageDialog(okSupprGroupe, "Ce groupe n'existe pas");
 	        	}
         	}
         	catch (NumberFormatException e) {

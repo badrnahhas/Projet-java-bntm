@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 import org.jdom2.Document;
@@ -117,7 +118,8 @@ public class UserDB {
 	
 	/**
 	 * Fonction qui supprime un groupe de la database (hashtable de groupes).
-	 * La fonction vérifie avant que celui qui fait l'action est un administrateur.	 
+	 * La fonction vérifie avant que celui qui fait l'action est un administrateur.	
+	 * Les id_group de tout les étudiants qui appartenaient à ce groupe passent à -1. 
 	 * @param adminLogin
 	 * @param groupId
 	 * @return vrai si le groupe a bien été supprimé, faux sinon.
@@ -125,6 +127,12 @@ public class UserDB {
 	public boolean removeaGroup(String adminLogin, int groupId) {
 		boolean Result = false;
 		if (getaUser(adminLogin) instanceof Admin) {
+			if (getaGroup(groupId) != null) {
+				for(Entry<String, Student> entry: getaGroup(groupId).getStudents().entrySet()) {
+					Student Value = entry.getValue();
+					Value.setId_student(-1);
+				}
+			}
 			Result = (Groups.remove(groupId) != null);
 			if (Result == true) {
 				save_users_groups();	//Met à jour le fichier XML

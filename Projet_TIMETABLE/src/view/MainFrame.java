@@ -22,7 +22,7 @@ public class MainFrame extends JFrame{
   
   public MainFrame(UserController userController, TimeTableController tTControlleruserController){
 	pan.setLayout(null);
-    this.setTitle("Larmes d'étudiants :");
+    this.setTitle("Timetable app v.5.2 - Badreddine NAHHAS - Thomas BELAIR - Francois MACKENZIE - Nicolas TOUSCH");
     this.setSize(1000, 1000);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.setResizable(false);

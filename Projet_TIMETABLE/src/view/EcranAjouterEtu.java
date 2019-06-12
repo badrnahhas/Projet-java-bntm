@@ -56,13 +56,13 @@ public class EcranAjouterEtu extends JFrame{
 	        	if(userController.addStudent(stringLoginArg, stringAjouterLoginEtu, valeurAjouterEtu, stringAjouterPrenomEtu, stringAjouterNomEtu, stringAjouterPasswordEtu) == true)
 	        	{
 	        		
-	        		JOptionPane.showMessageDialog(okAjouterEtu, "Groupe ajouté");
+	        		JOptionPane.showMessageDialog(okAjouterEtu, "étudiant ajouté");
 	        		System.out.println(valeurAjouterEtu);
 	        		setVisible(false);
 	        	}
 	        	else
 	        	{
-	        		JOptionPane.showMessageDialog(okAjouterEtu, "Le groupe existe déjà");
+	        		JOptionPane.showMessageDialog(okAjouterEtu, "L'étudiant existe déjà");
 	        	}
         	}
         	catch (NumberFormatException e) {

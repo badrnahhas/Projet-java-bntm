@@ -6,10 +6,17 @@ public class Group {
 	private int id_group;
 	private int number_of_students;
 	private Hashtable<String,Student> Students = new Hashtable<String,Student>();
-	
+
 	public Group(int aId_group) {
 		setId_group(aId_group);
 		setNumber_of_students();
+	}
+	
+	/**
+	 * @return the hash table "Students"
+	 */
+	public Hashtable<String, Student> getStudents() {
+		return Students;
 	}
 	
 	/**

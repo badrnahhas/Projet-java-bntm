@@ -35,12 +35,12 @@ public class EcranSupprUtil extends JFrame{
         	String stringSupprUtil = txtLoginSupprUtil.getText(); 
         	if(userController.removeUser(stringLoginArg, stringSupprUtil) == true)
         	{
-        		JOptionPane.showMessageDialog(okSupprUtil, "Groupe supprimé");
+        		JOptionPane.showMessageDialog(okSupprUtil, "Utilisateur supprimé");
         		setVisible(false);
         	}
         	else
         	{
-        		JOptionPane.showMessageDialog(okSupprUtil, "Le groupe n'existe pas");
+        		JOptionPane.showMessageDialog(okSupprUtil, "L'utilisateur n'existe pas");
         	}
         }
      });

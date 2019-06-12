@@ -93,7 +93,7 @@ public class EcranAdmin extends JFrame{
     
     boutonAssocierEtu.addActionListener(new ActionListener(){
         public void actionPerformed(ActionEvent event){
-        	EcranAssocierEtu ecranAssocierEtu = new EcranAssocierEtu();
+        	EcranAssocierEtu ecranAssocierEtu = new EcranAssocierEtu(stringLoginArg, userController);
         	ecranAssocierEtu.setVisible(true);
         	}
     	});

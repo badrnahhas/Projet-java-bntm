@@ -46,7 +46,7 @@ public class EcranAjouterSalle extends JFrame{
         		valeurAjouterSalleCapacite = Integer.parseInt(stringAjouterSalleCapacite); 
 	        	if(tTControlleruserController.addRoom(valeurAjouterSalle, valeurAjouterSalleCapacite) == true)
 	        	{
-	        		JOptionPane.showMessageDialog(okAjouterSalle, "Salle ajoutés");
+	        		JOptionPane.showMessageDialog(okAjouterSalle, "Salle ajoutée");
 	        		System.out.println(valeurAjouterSalle);
 	        		setVisible(false);
 	        	}

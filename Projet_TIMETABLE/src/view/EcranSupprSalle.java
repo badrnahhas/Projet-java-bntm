@@ -39,13 +39,13 @@ public class EcranSupprSalle extends JFrame{
         		valeurSupprSalle = Integer.parseInt(stringSupprSalle); 
 	        	if(tTControlleruserController.removeRoom(valeurSupprSalle) == true)
 	        	{
-	        		JOptionPane.showMessageDialog(okSupprSalle, "Groupe supprimé");
+	        		JOptionPane.showMessageDialog(okSupprSalle, "Salle supprimé");
 	        		System.out.println(valeurSupprSalle);
 	        		setVisible(false);
 	        	}
 	        	else
 	        	{
-	        		JOptionPane.showMessageDialog(okSupprSalle, "Le groupe n'existe pas");
+	        		JOptionPane.showMessageDialog(okSupprSalle, "La salle n'existe pas");
 	        	}
         	}
         	catch (NumberFormatException e) {
