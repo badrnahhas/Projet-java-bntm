@@ -130,7 +130,7 @@ public class UserDB {
 			if (getaGroup(groupId) != null) {
 				for(Entry<String, Student> entry: getaGroup(groupId).getStudents().entrySet()) {
 					Student Value = entry.getValue();
-					Value.setId_student(-1);
+					Value.setId_group(-1);
 				}
 			}
 			Result = (Groups.remove(groupId) != null);

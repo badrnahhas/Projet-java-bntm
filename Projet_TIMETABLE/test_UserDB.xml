@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <UsersDB>
-  <Groups />
+  <Groups>
+    <Group>
+      <groupId>2</groupId>
+    </Group>
+  </Groups>
   <Students>
     <Student>
-      <login>BELAIR</login>
-      <firstname>BELAIR</firstname>
-      <surname>BELAIR</surname>
-      <pwd>BELAIR</pwd>
-      <studentId>123456</studentId>
-      <groupId>1</groupId>
+      <login>BS</login>
+      <firstname>Buffy</firstname>
+      <surname>Summers</surname>
+      <pwd>stake</pwd>
+      <studentId>2001</studentId>
+      <groupId>-1</groupId>
     </Student>
     <Student>
       <login>NL</login>
@@ -16,15 +20,7 @@
       <surname>Lepetit</surname>
       <pwd>prout</pwd>
       <studentId>2002</studentId>
-      <groupId>1</groupId>
-    </Student>
-    <Student>
-      <login>BS</login>
-      <firstname>Buffy</firstname>
-      <surname>Summers</surname>
-      <pwd>stake</pwd>
-      <studentId>2001</studentId>
-      <groupId>1</groupId>
+      <groupId>-1</groupId>
     </Student>
   </Students>
   <Teachers>
