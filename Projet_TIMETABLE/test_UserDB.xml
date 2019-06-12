@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<UsersDB>
+  <Groups />
+  <Students>
+    <Student>
+      <login>sasa</login>
+      <firstname>NAHHAS</firstname>
+      <surname>Bader</surname>
+      <pwd>sasa</pwd>
+      <studentId>12345</studentId>
+      <groupId>-1</groupId>
+    </Student>
+  </Students>
+  <Teachers />
+  <Administrators>
+    <Administrator>
+      <login>niconahhas</login>
+      <firstname>First</firstname>
+      <surname>Admin</surname>
+      <pwd>123456</pwd>
+      <adminId>1000</adminId>
+    </Administrator>
+  </Administrators>
+</UsersDB>
