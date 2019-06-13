@@ -35,7 +35,6 @@ public class EDTPanel extends Panel {
 		userController = uController;
 		timeTableController = tTController;
 		setLayout(null);
-		this.firstDayOfWeek = calendar.getTime();
 		this.weekOfTheYear = calendar.get(Calendar.WEEK_OF_YEAR);
 
 		// Creer les components
@@ -79,16 +78,31 @@ public class EDTPanel extends Panel {
 
 		next.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				weekOfTheYear = weekOfTheYear + 1;
-				calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
+				if (weekOfTheYear == calendar.getWeeksInWeekYear()) {
+					calendar.set(calendar.get(Calendar.YEAR) + 1, 0, 1);
+					weekOfTheYear = 1;
+					calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
+				}else {
+					weekOfTheYear = weekOfTheYear + 1;
+					calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
+				}
+				System.out.println(weekOfTheYear);
 				repaint();
 			}
 		});
 
 		previous.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				weekOfTheYear = weekOfTheYear - 1;
-				calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
+				if (weekOfTheYear == 1) {
+					calendar.set(calendar.get(Calendar.YEAR) -1 , 11, 1);
+					System.out.println(Calendar.YEAR);
+					weekOfTheYear = calendar.getWeeksInWeekYear();
+					calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
+				}else {
+					weekOfTheYear = weekOfTheYear - 1;
+					calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
+				}
+				System.out.println(weekOfTheYear);
 				repaint();
 			}
 		});
@@ -100,7 +114,7 @@ public class EDTPanel extends Panel {
 
 		// Ecrire les dates sur l'emploi du temps
 		
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM");
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		firstDayOfWeek = calendar.getTime();
 		String date1 = formatter.format(calendar.getTime());
