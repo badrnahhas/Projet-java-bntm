@@ -75,9 +75,10 @@ public class EDTPanel extends Panel {
 			groupId = userController.getStudentGroup(stringLogin);
 
 		// Ajouter les ActionListeners
-
+		//Les boutons next et previous vont parcourir les semaines de l'année
 		next.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				//Si on arrive a la derniere semaine de l'annee on passe a l'annee suivante
 				if (weekOfTheYear == calendar.getWeeksInWeekYear()) {
 					calendar.set(calendar.get(Calendar.YEAR) + 1, 0, 1);
 					weekOfTheYear = 1;
@@ -86,23 +87,21 @@ public class EDTPanel extends Panel {
 					weekOfTheYear = weekOfTheYear + 1;
 					calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
 				}
-				System.out.println(weekOfTheYear);
 				repaint();
 			}
 		});
 
 		previous.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
+				//Si on arrive a la premiere semaine de l'annee on passe a l'annee precedente
 				if (weekOfTheYear == 1) {
 					calendar.set(calendar.get(Calendar.YEAR) -1 , 11, 1);
-					System.out.println(Calendar.YEAR);
 					weekOfTheYear = calendar.getWeeksInWeekYear();
 					calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
 				}else {
 					weekOfTheYear = weekOfTheYear - 1;
 					calendar.set(Calendar.WEEK_OF_YEAR, weekOfTheYear);
 				}
-				System.out.println(weekOfTheYear);
 				repaint();
 			}
 		});
@@ -113,7 +112,7 @@ public class EDTPanel extends Panel {
 		super.paintComponents(g);
 
 		// Ecrire les dates sur l'emploi du temps
-		
+		//On impose au calendrier la date de chaque jour de la semaine afin qu'on puisse les afficher sur l'EDT
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yy");
 		calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
 		firstDayOfWeek = calendar.getTime();
@@ -192,14 +191,18 @@ public class EDTPanel extends Panel {
 				// Verification de la semaine
 				System.out.println(firstDayOfWeek);
 				System.out.println(lastDayOfWeek);
+				//On verifie que la date de reservation est comprise dans la semaine actuelle
 				if ((dateBegin.get(i).before(firstDayOfWeek) == true)
 						|| (dateBegin.get(i).after(lastDayOfWeek) == true)) {
 				} else {
 					// On remplit les reservations
+					//On convertit les jours et les heures en coordonnees sur l'EDT
 					int l = dateBegin.get(i).getDay();
 					int j = (dateBegin.get(i).getHours() * 2) + ((dateBegin.get(i).getMinutes()) / 30);
+					//On calcule la longueur de la reservation en coordonnee
 					int k = ((dateEnd.get(i).getHours() * 2) + ((dateEnd.get(i).getMinutes()) / 30))
 							- ((dateBegin.get(i).getHours() * 2) + ((dateBegin.get(i).getMinutes()) / 30));
+					//Le premier jour de la semaine de la classe Calendar correspond a dimanche, on fait donc un decallage des valeurs
 					if (l == 0)
 						l = 7;
 					else
