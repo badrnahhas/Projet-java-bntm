@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.Hashtable;
 import java.util.Properties;
 
 import javax.swing.JButton;
@@ -89,25 +90,44 @@ public class EcranAjouterCours extends JFrame {
 				String hourfinish = heurefin.getSelectedItem().toString();
 				String datecompletedebut = jour + "/" + mois + "/" + an + " " + hourbegin;
 				String datecompletefin = jour + "/" + mois + "/" + an + " " + hourfinish;
-				Date startdate = new Date();
-				Date enddate = new Date();
+				Date newstartdate = new Date();
+				Date newenddate = new Date();
+				
+				
 				try {
-					startdate = formatter.parse(datecompletedebut);
+					newstartdate = formatter.parse(datecompletedebut);
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
 				try {
-					enddate = formatter.parse(datecompletefin);
+					newenddate = formatter.parse(datecompletefin);
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
-				System.out.println(startdate.toLocaleString());
-				System.out.println((listegroupe.getSelectedItem().toString()));
+				
+				
 				int groupselected = Integer.parseInt((listegroupe.getSelectedItem().toString()));
-				int bookingid = tTController.getBookingsMaxId(groupselected);
+				int bookingmaxid = tTController.getBookingsMaxId(groupselected);
 				int roomid = Integer.parseInt(listesalle.getSelectedItem().toString());
-				if (tTController.addBooking(groupselected, bookingid, stringLoginArg,startdate, enddate, roomid) == true) {
-
+				Hashtable<Integer, Date> existantdateBegin = new Hashtable<Integer, Date>();
+				Hashtable<Integer, Date> existantdateEnd = new Hashtable<Integer, Date>();
+				tTController.getBookingsDate(groupselected, existantdateBegin, existantdateEnd);
+				if ((!existantdateBegin.isEmpty())&&(!existantdateEnd.isEmpty())) {
+				for (int i =0; i< bookingmaxid; i++) {
+					
+					if((newstartdate.after(existantdateBegin.get(i)))&&((newstartdate.before(existantdateEnd.get(i)))))
+					{
+						if((newenddate.after(existantdateBegin.get(i)))&&((newenddate.before(existantdateEnd.get(i)))))
+		{
+			JOptionPane.showMessageDialog(boutonAdd, "Il existe deja une reservation avec ces dates" );
+			dispose();
+		}
+					}
+					
+				}
+				}
+				
+				if (tTController.addBooking(groupselected, bookingmaxid, stringLoginArg,newstartdate, newenddate, roomid) == true) {
 					JOptionPane.showMessageDialog(boutonAdd, "reservation ajouté");
 				}
 				else JOptionPane.showMessageDialog(boutonAdd, "erreur");

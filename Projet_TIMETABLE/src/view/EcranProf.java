@@ -14,8 +14,9 @@ import userController.UserController;
 
 public class EcranProf extends JFrame {
 	private JPanel pan3 = new JPanel();
-	private JButton boutonAjoutCours = new JButton("Ajouter un cours :'(");
-	private JButton boutonSupprCours = new JButton("Supprimer un cours :D");
+	private JButton boutonAjoutCours = new JButton("Ajouter un cours ");
+	private JButton boutonSupprCours = new JButton("Supprimer un cours");
+	private JButton boutonLogout = new JButton("Déconnexion");
 	public EcranProf(String stringLoginArg, String stringPasswordArg, UserController userController, TimeTableController tTController) {
 		
 		
@@ -28,11 +29,13 @@ public class EcranProf extends JFrame {
 		lblTitreProf.setBounds(425, 0, 100, 10);
 		boutonAjoutCours.setBounds(200, 15, 100, 25);
 		boutonSupprCours.setBounds(600, 15, 100, 25);
+		boutonLogout.setBounds(500, 0, 100, 30);
 		EDTPanel edtpanel = new EDTPanel(stringLoginArg, stringPasswordArg, userController, tTController); 
 		edtpanel.setBounds(100,100,900,800);
 		pan3.add(boutonAjoutCours);
 		pan3.add(boutonSupprCours);
 		pan3.add(lblTitreProf);
+		pan3.add(boutonLogout);
 		pan3.add(edtpanel);
 		this.setContentPane(pan3);
 		this.setVisible(false);
@@ -49,6 +52,14 @@ public class EcranProf extends JFrame {
 				EcranChoisirGroupeSupp ecranSupprimerCours = new EcranChoisirGroupeSupp(userController, tTController);
 				ecranSupprimerCours.setVisible(true);
 			}
+		});
+		
+		boutonLogout.addActionListener(new ActionListener(){
+	        public void actionPerformed(ActionEvent event){
+	        	MainFrame mainframe = new MainFrame(userController, tTController);
+	        	dispose();
+	        	mainframe.setVisible(true);
+	        	}
 		});
 
 	}

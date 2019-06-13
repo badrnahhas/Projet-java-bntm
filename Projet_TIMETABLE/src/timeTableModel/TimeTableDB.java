@@ -221,7 +221,7 @@ public class TimeTableDB {
 		save_timetables(rootElt);
 		try{ 
 			XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-			sortie.output(document, new FileOutputStream("test_timeTableDB.xml"));
+			sortie.output(document, new FileOutputStream("timeTableDB.xml"));
 			Result = true;
 		}
 		catch (java.io.IOException e){}

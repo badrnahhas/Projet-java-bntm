@@ -190,6 +190,8 @@ public class EDTPanel extends Panel {
 		for (int i = 0; i < timeTableController.getBookingsMaxId(groupId); i++)
 			if (!dateBegin.isEmpty()) {
 				// Verification de la semaine
+				System.out.println(firstDayOfWeek);
+				System.out.println(lastDayOfWeek);
 				if ((dateBegin.get(i).before(firstDayOfWeek) == true)
 						|| (dateBegin.get(i).after(lastDayOfWeek) == true)) {
 				} else {

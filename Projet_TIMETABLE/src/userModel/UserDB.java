@@ -264,7 +264,7 @@ public class UserDB {
 		save_admins(rootElt);
 		try{
 			XMLOutputter sortie = new XMLOutputter(Format.getPrettyFormat());
-			sortie.output(document, new FileOutputStream("test_UserDB.xml"));
+			sortie.output(document, new FileOutputStream("UserDB.xml"));
 			Result = true;
 		}
 		catch (java.io.IOException e){}

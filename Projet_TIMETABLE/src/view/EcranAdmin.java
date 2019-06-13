@@ -27,6 +27,7 @@ public class EcranAdmin extends JFrame{
   private JButton boutonAjouterProf = new JButton("Ajouter un professeur");
   private JButton boutonAjouterAdmin = new JButton("Ajouter un Administrateur");
   private JButton boutonSupprUtil = new JButton("Supprimer un utilisateur");
+  private JButton boutonLogout = new JButton("Déconnexion");
   
   public EcranAdmin(String stringLoginArg, String stringPasswordArg, UserController userController, TimeTableController tTController){
 	JLabel lblTitreAdmin = new JLabel("ADMIN :"+stringLoginArg);
@@ -51,6 +52,7 @@ public class EcranAdmin extends JFrame{
     boutonAjouterProf.setBounds(675, 150, 125, 25);
     boutonAjouterAdmin.setBounds(675, 200, 125, 25);
     boutonSupprUtil.setBounds(675, 250, 125, 25);
+    boutonLogout.setBounds(675, 400, 125, 25);
     pan4.add(lblTitreAdmin);
     pan4.add(lblTitreAdminGroupe);
     pan4.add(lblTitreAdminSalle);
@@ -67,6 +69,8 @@ public class EcranAdmin extends JFrame{
     pan4.add(boutonAjouterProf);
     pan4.add(boutonAjouterAdmin);
     pan4.add(boutonSupprUtil);
+    pan4.add(boutonLogout);
+    
     this.setContentPane(pan4);
     this.setVisible(false);
     
@@ -153,5 +157,13 @@ public class EcranAdmin extends JFrame{
         	ecranSupprUtil.setVisible(true);
         	}
     	});
+    
+    boutonLogout.addActionListener(new ActionListener(){
+        public void actionPerformed(ActionEvent event){
+        	MainFrame mainframe = new MainFrame(userController, tTController);
+        	dispose();
+        	mainframe.setVisible(true);
+        	}
+	});
   }       
 }
